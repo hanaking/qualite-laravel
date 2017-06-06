@@ -1,36 +1,36 @@
-node {
-    def app
-
-    stage('Clone repository') {
-        /* Let's make sure we have the repository cloned to our workspace */
-
-        checkout scm
-    }
-
-    stage('Build image') {
-        /* This builds the actual image; synonymous to
-         * docker build on the command line */
-         
-        app = docker.build("bkvin-laravel-docker")
-    }
-
-    stage('Test image') {
-        /* Ideally, we would run a test framework against our image.
-         * For this example, we're using a Volkswagen-type approach ;-) */
-
-        app.inside {
-            sh 'echo "Tests passed"'
+node("master") {
+   try {
+        stage('prepare') {
+            git credentialsId: 'f5df6f18-a8be-45f5-b484-71fb221cb629', url: 'https://github.com/bkvin/qualite-laravel.git', branch: 'master'
         }
-    }
-
-    stage('Push image') {
-        /* Finally, we'll push the image with two tags:
-         * First, the incremental build number from Jenkins
-         * Second, the 'latest' tag.
-         * Pushing multiple tags is cheap, as all the layers are reused. */
-        docker.withRegistry('https://registry.hub.docker.com', 'docker-hub-credentials') {
-            app.push("${env.BUILD_NUMBER}")
-            app.push("latest")
+        
+        stage('build'){ 
+            sh "cp .env.example .env"
+            sh "composer install"
+            sh "php artisan key:generate"
         }
+        
+        stage('test') {
+            sh "./vendor/bin/phpunit"
+        }
+
+        stage('git'){
+            GIT_BRANCH = sh(returnStdout: true, script: 'git rev-parse --abbrev-ref HEAD').trim()
+            
+            if (GIT_BRANCH == "master") {    
+                sh('git merge origin dev')  
+                sh('git commit -am "Merged develop branch to master')
+                sh('git push origin master')
+            }  
+        }
+        
+        stage('cleanup') {
+             // Recursively delete all files and folders in the workspace
+             // using the built-in pipeline command
+             deleteDir()
+         }
+    } catch(error) {
+        throw error
+    } finally {
     }
 }
