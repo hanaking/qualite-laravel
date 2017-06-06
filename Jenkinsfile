@@ -2,6 +2,7 @@ node("master") {
     try {
         stage('prepare') {
             git credentialsId: 'f5df6f18-a8be-45f5-b484-71fb221cb629', url: 'https://github.com/bkvin/qualite-laravel.git', branch: 'master'
+            sh('git status')
         }
 
         stage('build'){ 
@@ -15,9 +16,11 @@ node("master") {
         }
 
         stage('git'){  
+            sh('git status')
             sh('git merge origin dev')  
             sh('git commit -am "Merged develop branch to master')
             sh('git push origin master')
+            sh('git status')
         }
 
         stage('cleanup') {
