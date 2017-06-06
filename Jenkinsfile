@@ -15,7 +15,7 @@ node("master") {
         }
 
         stage('git'){  
-            sh('git pull')  
+            sh('git pull origin master')  
             sh('git merge origin dev')  
             sh('git commit -am "Merged develop branch to master')
             sh('git push origin master')
