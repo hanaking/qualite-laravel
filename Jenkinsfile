@@ -21,7 +21,8 @@ node("master") {
             if (GIT_MERGE != "Already up-to-date.") { 
             
                 withCredentials([[$class: 'UsernamePasswordMultiBinding', credentialsId: 'f5df6f18-a8be-45f5-b484-71fb221cb629', usernameVariable: 'GIT_USERNAME', passwordVariable: 'GIT_PASSWORD']]) {
-                    sh('echo https://$GIT_USERNAME:$GIT_PASSWORD@<REPO>')
+                    echo GIT_USERNAME
+                    echo GIT_PASSWORD
                     sh('git push https://${GIT_USERNAME}:${GIT_PASSWORD}@<REPO>')
                 }   
             }            
