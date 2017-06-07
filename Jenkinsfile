@@ -15,10 +15,14 @@ node("master") {
         }
 
         stage('git'){  
+            
             GIT_MERGE = sh(returnStdout: true, script: 'git merge origin/dev').trim()
             
-            if (GIT_MERGE != "Already up-to-date.") {    
-                sh('git push --repo https://bkvin:sdftyui59@github.com/bkvin/qualite-laravel.git')
+            if (GIT_MERGE != "Already up-to-date.") { 
+                withCredentials([[$class: 'UsernamePasswordMultiBinding', credentialsId: 'f5df6f18-a8be-45f5-b484-71fb221cb629', usernameVariable: 'GIT_USERNAME', passwordVariable: 'GIT_PASSWORD']]) {
+
+                    sh('git push https://${GIT_USERNAME}:${GIT_PASSWORD}@<REPO>')
+                }   
             }            
         }
     } catch(error) {
