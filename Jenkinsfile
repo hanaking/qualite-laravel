@@ -19,9 +19,11 @@ node("master") {
             GIT_MERGE = sh(returnStdout: true, script: 'git merge origin/dev').trim()
             
             if (GIT_MERGE != "Already up-to-date.") { 
-                echo 'test'
+            
                 withCredentials([[$class: 'UsernamePasswordMultiBinding', credentialsId: 'f5df6f18-a8be-45f5-b484-71fb221cb629', usernameVariable: 'GIT_USERNAME', passwordVariable: 'GIT_PASSWORD']]) {
-
+                    echo GIT_USERNAME
+                    echo GIT_PASSWORD
+                    echo REPO
                     sh('git push https://${GIT_USERNAME}:${GIT_PASSWORD}@<REPO>')
                 }   
             }            
