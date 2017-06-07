@@ -5,9 +5,7 @@ node("master") {
         }
 
         stage('build'){ 
-            sh "cp .env.example .env"
             sh "composer install"
-            sh "php artisan key:generate"
         }
 
         stage('test') {
@@ -15,21 +13,18 @@ node("master") {
         }
 
         stage('git'){  
-            sh('git checkout dev')  
-            sh('git checkout master')  
             sh('git merge origin dev')  
             sh('git commit -am "Merged develop branch to master')
             sh('git push origin master')
-        }
-
-        stage('cleanup') {
-            // Recursively delete all files and folders in the workspace
-            // using the built-in pipeline command
-            deleteDir()
         }
     } catch(error) {
         throw error
     } finally {
     
+        stage('cleanup') {
+            // Recursively delete all files and folders in the workspace
+            // using the built-in pipeline command
+            deleteDir()
+        }
     }
 }
