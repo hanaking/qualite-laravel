@@ -15,10 +15,13 @@ node("master") {
         }
 
         stage('git'){  
-            sh('git merge origin/dev')  
-            sh('git status')  
-            sh('git commit -am "Merged develop branch to master"')
-            sh('git push origin master')
+            sh('git merge origin/dev')              
+            GIT_STATUS = sh(returnStdout: true, script: 'git status --short').trim()
+            
+            if (GIT_STATUS != "") {    
+                sh('git commit -am "Merged develop branch to master"')
+                sh('git push origin master')
+            }            
         }
     } catch(error) {
         throw error
