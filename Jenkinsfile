@@ -19,7 +19,7 @@ node("master") {
             GIT_MERGE = sh(returnStdout: true, script: 'git merge origin/dev').trim()
             
             if (GIT_MERGE != "Already up-to-date.") { 
-                sh('ssh://bkvin@github.com:22/qualite-laravel.git')
+                sh('ssh://bkvin@github.com:22/bkvin/qualite-laravel.git')
             }            
         }
     } catch(error) {
