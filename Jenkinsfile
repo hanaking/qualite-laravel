@@ -1,7 +1,7 @@
 node("master") {
     try {
         stage('prepare') {
-            git credentialsId: '8bb830bb-ad2d-4c58-a2b5-5c0daf5e85f1', url: 'https://github.com/bkvin/qualite-laravel.git', branch: 'master'
+            git credentialsId: '69e8308a-109f-4612-9431-d719b989c869', url: 'https://github.com/bkvin/qualite-laravel.git', branch: 'master'
             sh('git config --global user.email "alpha.aurigaeb@gmail.com"')
             sh('git config --global user.name "bkvin"')
         }
@@ -20,7 +20,7 @@ node("master") {
             
             if (GIT_MERGE != "Already up-to-date.") { 
             
-                sshagent(['8bb830bb-ad2d-4c58-a2b5-5c0daf5e85f1']) {
+                sshagent(['69e8308a-109f-4612-9431-d719b989c869']) {
                     sh('git push ssh://github.com:22/bkvin/qualite-laravel.git --all')
                 }
             }            
