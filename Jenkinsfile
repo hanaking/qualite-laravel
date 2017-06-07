@@ -5,7 +5,7 @@ node("master") {
         }
 
         stage('build'){ 
-            sh "composer install"
+            // sh "composer install"
         }
 
         stage('test') {
