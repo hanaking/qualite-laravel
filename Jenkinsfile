@@ -16,10 +16,10 @@ node("master") {
 
         stage('git'){  
             GIT_MERGE = sh(returnStdout: true, script: 'git merge origin/dev').trim()
-            echo GIT_MERGE
+            // echo GIT_MERGE
             
             if (GIT_MERGE != "Already up-to-date.") {    
-                sh('git commit -am "Merged develop branch to master"')
+                // sh('git commit -am "Merged develop branch to master"')
                 sh('git push origin master')
             }            
         }
