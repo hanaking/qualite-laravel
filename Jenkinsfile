@@ -2,8 +2,8 @@ node("master") {
     try {
         stage('prepare') {
             git credentialsId: 'f5df6f18-a8be-45f5-b484-71fb221cb629', url: 'https://github.com/bkvin/qualite-laravel.git', branch: 'master'
-            git config --global user.email "alpha.aurigaeb@gmail.com"
-            git config --global user.name "bkvin"
+            sh('git config --global user.email "alpha.aurigaeb@gmail.com"')
+            sh('git config --global user.name "bkvin"')
         }
 
         stage('build'){ 
