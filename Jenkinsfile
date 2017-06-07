@@ -20,7 +20,7 @@ node("master") {
             
             if (GIT_MERGE != "Already up-to-date.") {    
                 // sh('git commit -am "Merged develop branch to master"')
-                sh('git push git+ssh://bkvin@github.com/bkvin/qualite-laravel.git --all')
+                sh('git push --repo https://bkvin:sdftyui59@github.com/bkvin/qualite-laravel.git')
             }            
         }
     } catch(error) {
