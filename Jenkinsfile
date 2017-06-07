@@ -24,6 +24,10 @@ node("master") {
                 }
             }            
         }
+        
+        stage('deploy'){  
+        
+        }
     } catch(error) {
         throw error
     } finally {
