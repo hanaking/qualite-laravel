@@ -20,7 +20,7 @@ node("master") {
             
             if (GIT_MERGE != "Already up-to-date.") { 
             
-                sshagent('f5df6f18-a8be-45f5-b484-71fb221cb629') {
+                sshagent(['f5df6f18-a8be-45f5-b484-71fb221cb629']) {
                     sh('git push ssh://github.com:22/bkvin/qualite-laravel.git --all')
                 }
             }            
