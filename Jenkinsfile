@@ -27,6 +27,10 @@ node("master") {
         
         stage('deploy'){  
         
+            withCredentials([[$class: 'UsernamePasswordMultiBinding', credentialsId: 'cd435227-8d21-43c6-ad40-7a24dff92abd', usernameVariable: 'FTP_USERNAME', passwordVariable: 'FTP_PASSWORD']]) {
+                
+                sh('git ftp init --user ${FTP_USERNAME} --passwd ${FTP_PASSWORD} ftp://46.105.92.169/test/')
+            }
         }
     } catch(error) {
         throw error
